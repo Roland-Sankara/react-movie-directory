@@ -13,26 +13,20 @@ function Movieform() {
 
   function validateData(name,ratings,duration){
     let updatedMovie = {};
+    let validationError = '';
 
-    name ? updatedMovie['name'] = name : setError('Enter Movie name');
-    // iterate movies list to check duplication
-    // for(let movie of movieList){
-    //   movie.name === name && setError('Movie of given name exists');
-    // }
-
-
-    +ratings > 0 && +ratings <=100 ? updatedMovie['ratings'] = +ratings : setError('Movie rating should be from 0 to 100');
-    duration.match(/[hm]/i) ? updatedMovie['duration'] = duration : setError('Please specify time in hours or minutes (e.g. 2.5h or 150m)');
-
+    name ? updatedMovie['name'] = name : validationError = 'Enter Movie name';
+    +ratings > 0 && +ratings <=100 ? updatedMovie['ratings'] = +ratings : validationError = 'Movie rating should be from 0 to 100';
+    duration.match(/[hm]/i) ? updatedMovie['duration'] = duration : validationError = 'Please specify time in hours or minutes (e.g. 2.5h or 150m)';
     
-    return updatedMovie;
+    setError(validationError);
+
+    return validationError ? validationError : updatedMovie;
   }
 
   function submitMovie(){
-    // console.log(name,ratings,duration)
-    console.log(validateData(name,ratings,duration));
-    if(typeof validateData(name,ratings,duration) === 'object' && !error ){
-      // console.log(validateData(name,ratings,duration));
+
+    if(typeof validateData(name,ratings,duration) === 'object'){
       addNewMovie(validateData(name,ratings,duration));
       setName('')
       setRatings('')

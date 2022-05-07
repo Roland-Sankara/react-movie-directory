@@ -2,7 +2,8 @@ import React, {createContext, useReducer} from 'react';
 import AppReducer from './AppReducer';
 
 const initialState = {
-  movieList: []
+  movieList: [],
+  dupeMovieList: []
 };
 
 // create Context
@@ -18,11 +19,26 @@ export const GlobalProvider = ({children})=>{
             payload: movie
         })
     }
+    function setMovieList(movies){
+        disptach({
+            type:'SET_MOVIE',
+            payload: movies
+        })
+    }
+    function setDupeMovieList(movies){
+        disptach({
+            type:'SET_DUPE_MOVIE_LIST',
+            payload: movies
+        })
+    }
 
     return(
         <GlobalContext.Provider value={{
-            movieList:state.movieList,
-            addNewMovie
+            movieList: state.movieList,
+            dupeMovieList: state.dupeMovieList,
+            addNewMovie,
+            setMovieList,
+            setDupeMovieList
             }}>
             {children}
         </GlobalContext.Provider>
